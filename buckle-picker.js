@@ -135,12 +135,18 @@ async function getShopifyProducts() {
             "X-Shopify-Storefront-Access-Token": "ebb7bd8eab1ef3517c4e7af059e3a8ff",
             });
 
+            console.log(content?.buckle_labels.ids[0]);
+
             const response2 = await fetch(api_url, {
               method: "POST",
               headers: headers,
               body: getQuery(content?.buckle_labels.ids[0]),
             });
             const data = await response2.json();
+
+            console.log(getQuery(content?.buckle_labels.ids[0]));
+
+            console.log(data);
       
             const priceLabel = `€${data.data.product.variants.edges[0].node.price.slice(
               0,
