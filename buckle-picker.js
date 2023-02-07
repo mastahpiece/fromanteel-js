@@ -175,7 +175,7 @@ async function getShopifyProducts() {
 function getQuery(id) {
   const query = `
    {
-            product (id: ${id}){
+            product (id: "${id}"){
                title,
             variants(first: 1){
               edges {
