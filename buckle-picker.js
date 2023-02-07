@@ -111,13 +111,6 @@ $(document).ready(function () {
   console.error("Element to place fold buckle was not found");
 }
 
-const api_url = "https://shoopyloopy1.myshopify.com/api/2022-01/graphql.json";
-const headers = new Headers({
-  "Content-Type": "application/graphql",
-  Accept: "application/json",
-  "X-Shopify-Storefront-Access-Token": "ebb7bd8eab1ef3517c4e7af059e3a8ff",
-});
-
 function returnBuckleObjectForCart() {
   let objectToAdd = {
     id: buckleId,
@@ -135,13 +128,19 @@ async function getShopifyProducts() {
 
     if (content?.buckle_labels.ids[0]){
         try {
+            const api_url = "https://shoopyloopy1.myshopify.com/api/2022-01/graphql.json";
+            const headers = new Headers({
+            "Content-Type": "application/graphql",
+            Accept: "application/json",
+            "X-Shopify-Storefront-Access-Token": "ebb7bd8eab1ef3517c4e7af059e3a8ff",
+            });
+
             const response2 = await fetch(api_url, {
               method: "POST",
               headers: headers,
               body: getQuery(content?.buckle_labels.ids[0]),
             });
             const data = await response2.json();
-		console.log(data);
       
             const priceLabel = `€${data.data.product.variants.edges[0].node.price.slice(
               0,
