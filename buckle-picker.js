@@ -140,6 +140,7 @@ async function getShopifyProducts() {
               headers: headers,
               body: getQuery(content?.buckle_labels.ids[0]),
             });
+		console.log(response2);
             const data = await response2.json();
 
             console.log(data);
