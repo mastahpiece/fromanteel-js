@@ -3,106 +3,113 @@ var buckleId;
 var buckleSelected = false;
 var popUpIsOpen = false;
 
-fetch(`${window.location.href}.json`)
-  .then((data) => {
-    data.json().then((d) => console.log(d));
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+// fetch(`${window.location.href}.json`)
+//   .then((data) => {
+//     data.json().then((d) => console.log(d));
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//   });
 
 if (el) {
-  getShopifyProducts();
-  el.innerHTML = `
-  <span>Add Fold Buckle at 30% OFF:</span>
-    <div class="Select Select--primary pickerdiv">
-        <select id="buckle-picker">
-            <option value="0" selected="selected">Add a Fold Buckle: No</option>
-            <option id="buckleOk" value="1" data-money-convertible>Add a Fold Buckle: Yes</option>
-            
-        </select>
-        <svg class="Icon Icon--select-arrow" role="presentation" viewBox="0 0 19 12">
-            <polyline fill="none" stroke="currentColor" points="17 2 9.5 10 2 2" fill-rule="evenodd" stroke-width="2" stroke-linecap="square"></polyline>
-        </svg>
+getShopifyProducts().then((data) => {
+    console.log(data);
+    var styleSheet = document.createElement("style");
+    styleSheet.innerText = css;
+    document.head.appendChild(styleSheet);
+    el.innerHTML = `
+    <span>${data?.dropdownHeader}</span>
+      <div class="Select Select--primary pickerdiv">
+          <select id="buckle-picker">
+              <option value="0" selected="selected">${data?.options.filter(i => i.no)[0].no}</option>
+              <option id="buckleOk" value="1" data-money-convertible>${data?.options.filter(i => i.yes)[0].yes}</option>
+              
+          </select>
+          <svg class="Icon Icon--select-arrow" role="presentation" viewBox="0 0 19 12">
+              <polyline fill="none" stroke="currentColor" points="17 2 9.5 10 2 2" fill-rule="evenodd" stroke-width="2" stroke-linecap="square"></polyline>
+          </svg>
+  
+      <div class="buckle__mobileWrapper">
+      <header class="popTitle --toggleHeight"></header>
+      <div class="buckle__popover__content">
+      <button type="button" class="buckle__popCloseButton">X</button>
+      <header class="popTitle"><span id="popMsg" class="popover__message">${data?.popupTitle}</span></header>
+      <div class="content">
+          <p class="buckle__popover__text">
+          ${data?.popupText}
+          </p>
+  
+          <div class="fold_buckle_div">
+              <img class="Image--lazyLoad" src="https://firebasestorage.googleapis.com/v0/b/my-masjid-bae25.appspot.com/o/fold_buckle.jpg?alt=media&token=064c4233-d801-4ec4-b9ad-840494211f96"/>
+          </div>
+          
+          <button class="addBuckleButton" type="button"> 
+              <span>Add Buckle</span>
+              <span class="Button__SeparatorDot"></span>
+              <span id="price" data-money-convertible>Loading..</span>
+          </button>
+      </div>
+  </div>
+  </div>
+  </div>
+      </div>
+  `;
 
-    <div class="buckle__mobileWrapper">
-    <header class="popTitle --toggleHeight"></header>
-    <div class="buckle__popover__content">
-    <button type="button" class="buckle__popCloseButton">X</button>
-    <header class="popTitle"><span id="popMsg" class="popover__message">add a fold buckle</span></header>
-    <div class="content">
-        <p class="buckle__popover__text">
-            Add an extra touch to your watch with <br> a luxurious fold buckle. <br> <br> The fold buckle increases the durability of your strap and ensures a more comfortable fit around the wrist, making opening and closing it a breeze. <br> <br> Add one today and get it at 30% off <br> the regular price. 
-        </p>
 
-        <div class="fold_buckle_div">
-            <img class="Image--lazyLoad" src="https://firebasestorage.googleapis.com/v0/b/my-masjid-bae25.appspot.com/o/fold_buckle.jpg?alt=media&token=064c4233-d801-4ec4-b9ad-840494211f96" width="auto">
-        </div>
-        
-        <button class="addBuckleButton" type="button"> 
-            <span>Add Buckle</span>
-            <span class="Button__SeparatorDot"></span>
-            <span id="price" data-money-convertible>Loading..</span>
-        </button>
-    </div>
-</div>
-</div>
-</div>
-    </div>
-`;
+$(document).ready(function () {
+    $(".ProductMeta__Title").change(function () {
+      console.log();
+    });
+  
+    $(".buckle__popCloseButton").click(function () {
+      $("[id=buckle-picker]").val(0).trigger("buckle1toggle");
+      $(".buckle__mobileWrapper").css("display", "none");
+    });
+  
+    $(".addBuckleButton").click(function () {
+      buckleSelected = true;
+      popUpIsOpen = false;
+      $("[id=buckle-picker]").val(1);
+      $(".buckle__mobileWrapper").css("display", "none");
+    });
+  
+    /*AddToCartButton label change after adding a buckle*/
+    $("#buckle-picker").change(function () {
+      console.log("change");
+      var optionId = $("#buckle-picker option:selected")[0].id;
+      if (optionId == "buckleOk") {
+        buckleSelected = true;
+        $(".buckle__mobileWrapper").css("z-index", "10");
+        $(".buckle__mobileWrapper").css("display", "block");
+        popUpIsOpen = true;
+      } else {
+        buckleSelected = false;
+        $("#buckle-picker").val(0);
+      }
+    });
+  
+    $(document).click(function (e) {
+      var target = e.target;
+      if (
+        popUpIsOpen &&
+        !$(target).is(".buckle__mobileWrapper") &&
+        !$(target).parents().is(".buckle__mobileWrapper") &&
+        !$(target).parents().is("div#fold-buckle-app-selector") &&
+        !$(target).is("div#fold-buckle-app-selector")
+      ) {
+        if (buckleSelected) {
+          $("#buckle-picker").val(0);
+          buckleSelected = false;
+          popUpIsOpen = false;
+        }
+        $(".buckle__mobileWrapper").css("display", "none");
+      }
+    });
+  }); // End of document ready function
+});
 } else {
   console.error("Element to place fold buckle was not found");
 }
-
-$(document).ready(function () {
-  $(".ProductMeta__Title").change(function () {
-    console.log();
-  });
-
-  $(".buckle__popCloseButton").click(function () {
-    $("[id=buckle-picker]").val(0).trigger("buckle1toggle");
-    $(".buckle__mobileWrapper").css("display", "none");
-  });
-
-  $(".addBuckleButton").click(function () {
-    buckleSelected = true;
-    popUpIsOpen = false;
-    $("[id=buckle-picker]").val(1);
-    $(".buckle__mobileWrapper").css("display", "none");
-  });
-
-  /*AddToCartButton label change after adding a buckle*/
-  $("#buckle-picker").change(function () {
-    var optionId = $("#buckle-picker option:selected")[0].id;
-    if (optionId == "buckleOk") {
-      buckleSelected = true;
-      $(".buckle__mobileWrapper").css("z-index", "10");
-      $(".buckle__mobileWrapper").css("display", "block");
-      popUpIsOpen = true;
-    } else {
-      buckleSelected = false;
-      $("#buckle-picker").val(0);
-    }
-  });
-
-  $(document).click(function (e) {
-    var target = e.target;
-    if (
-      popUpIsOpen &&
-      !$(target).is(".buckle__mobileWrapper") &&
-      !$(target).parents().is(".buckle__mobileWrapper") &&
-      !$(target).parents().is("div#fold-buckle-app-selector") &&
-      !$(target).is("div#fold-buckle-app-selector")
-    ) {
-      if (buckleSelected) {
-        $("#buckle-picker").val(0);
-        buckleSelected = false;
-        popUpIsOpen = false;
-      }
-      $(".buckle__mobileWrapper").css("display", "none");
-    }
-  });
-}); // End of document ready function
 
 const api_url = "https://shoopyloopy1.myshopify.com/api/2022-01/graphql.json";
 const headers = new Headers({
@@ -152,6 +159,7 @@ async function getShopifyProducts() {
     } catch (error) {
       console.log(`error: ${error}`);
     }
+    return content.buckle_labels;
   } catch (error) {
     console.log(
       "Something went wrong retrieving the buckle id's. Contact the admin when you see this."
@@ -441,6 +449,3 @@ import { Shopify } from '@shopify/shopify-api';
   }
 }`;
 
-var styleSheet = document.createElement("style");
-styleSheet.innerText = css;
-document.head.appendChild(styleSheet);
