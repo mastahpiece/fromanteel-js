@@ -128,7 +128,7 @@ async function getShopifyProducts() {
 
     if (content?.buckle_labels.ids[0]){
         try {
-            const api_url = "https://shoopyloopy1.myshopify.com/api/2022-01/graphql.json";
+            const api_url = "https://shoopyloopy1.myshopify.com/api/2023-01/graphql.json";
             const headers = new Headers({
             "Content-Type": "application/graphql",
             Accept: "application/json",
@@ -174,13 +174,15 @@ async function getShopifyProducts() {
 
 function getQuery(id) {
   const query = `
-        {
-            product (id: "${id}"){
+   {
+            product (id: ${id}){
                title,
             variants(first: 1){
               edges {
                 node {
-                  price,
+                  price {
+                    amount
+                  },
                   id
                 }
               }
