@@ -131,11 +131,9 @@ async function getShopifyProducts() {
             const api_url = "https://shoopyloopy1.myshopify.com/api/2023-01/graphql.json";
             const headers = new Headers({
             "Content-Type": "application/graphql",
-            Accept: "application/json",
+            "Accept": "application/json",
             "X-Shopify-Storefront-Access-Token": "ebb7bd8eab1ef3517c4e7af059e3a8ff",
             });
-
-            console.log(content?.buckle_labels.ids[0]);
 
             const response2 = await fetch(api_url, {
               method: "POST",
@@ -144,11 +142,10 @@ async function getShopifyProducts() {
             });
             const data = await response2.json();
 
-            console.log(getQuery(content?.buckle_labels.ids[0]));
-
             console.log(data);
       
-            const priceLabel = `€${data.data.product.variants.edges[0].node.price.slice(
+		if (data.data.product){
+		            const priceLabel = `€${data.data.product.variants.edges[0].node.price.slice(
               0,
               -3
             )}`;
@@ -159,6 +156,7 @@ async function getShopifyProducts() {
             )
               .toString()
               .split("/ProductVariant/")[1];
+		}
           } catch (error) {
             console.log(`error: ${error}`);
           }
