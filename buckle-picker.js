@@ -132,33 +132,32 @@ async function getShopifyProducts() {
   try {
     const response = await fetch(url);
     const content = await response.json();
-    let tempProductIdList = [];
-    for (let x in content?.ids) {
-      tempProductIdList.push(content?.ids[x]);
+
+    if (content?.buckle_labels.ids[0]){
+        try {
+            const response2 = await fetch(api_url, {
+              method: "POST",
+              headers: headers,
+              body: getQuery(content?.buckle_labels.ids[0]),
+            });
+            const data = await response2.json();
+      
+            const priceLabel = `€${data.data.product.variants.edges[0].node.price.slice(
+              0,
+              -3
+            )}`;
+            $("#price").text(priceLabel);
+            buckleId = Buffer.from(
+              data.data.product.variants.edges[0].node.id,
+              "base64"
+            )
+              .toString()
+              .split("/ProductVariant/")[1];
+          } catch (error) {
+            console.log(`error: ${error}`);
+          }
     }
 
-    try {
-      const response2 = await fetch(api_url, {
-        method: "POST",
-        headers: headers,
-        body: getQuery(tempProductIdList[0]),
-      });
-      const data = await response2.json();
-
-      const priceLabel = `€${data.data.product.variants.edges[0].node.price.slice(
-        0,
-        -3
-      )}`;
-      $("#price").text(priceLabel);
-      buckleId = Buffer.from(
-        data.data.product.variants.edges[0].node.id,
-        "base64"
-      )
-        .toString()
-        .split("/ProductVariant/")[1];
-    } catch (error) {
-      console.log(`error: ${error}`);
-    }
     return content.buckle_labels;
   } catch (error) {
     console.log(
