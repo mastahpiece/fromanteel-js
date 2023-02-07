@@ -141,6 +141,7 @@ async function getShopifyProducts() {
               body: getQuery(content?.buckle_labels.ids[0]),
             });
             const data = await response2.json();
+		console.log(data);
       
             const priceLabel = `€${data.data.product.variants.edges[0].node.price.slice(
               0,
