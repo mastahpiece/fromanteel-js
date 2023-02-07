@@ -121,7 +121,7 @@ function returnBuckleObjectForCart() {
 
 async function getShopifyProducts() {
   const url =
-    "https://europe-west1-fromanteel-nightdive.cloudfunctions.net/getIds";
+    "https://europe-west1-fromanteel-nightdive.cloudfunctions.net/getTextLabels";
   try {
     const response = await fetch(url);
     const content = await response.json();
