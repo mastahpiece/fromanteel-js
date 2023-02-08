@@ -128,7 +128,7 @@ async function getShopifyProducts() {
 
     if (content?.buckle_labels.ids[0]){
         try {
-            const api_url = "https://shoopyloopy1.myshopify.com/api/2022-01/graphql.json";
+            const api_url = "https://fromanteel-watches.myshopify.com/api/2022-01/graphql.json";
 //             const headers = new Headers({
 //             "Content-Type": "application/graphql",
 //             "Accept": "application/json",
