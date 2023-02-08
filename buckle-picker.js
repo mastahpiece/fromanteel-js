@@ -146,7 +146,8 @@ async function getShopifyProducts() {
             console.log(data);
       
 		if (data.data.product){
-		  const priceLabel = `€${data.data.product.variants.edges[0].node.price.amount.slice(0,-2)}`;
+		  const priceLabel = `€${data.data.product.variants.edges[0].node.price.amount}`;
+      console.log(priceLabel);
       $("#price").text(priceLabel);
       buckleId = data.data.product.variants.edges[0].node.id.toString()
       .split("gid://shopify/ProductVariant/")[1];
