@@ -129,15 +129,19 @@ async function getShopifyProducts() {
     if (content?.buckle_labels.ids[0]){
         try {
             const api_url = "https://shoopyloopy1.myshopify.com/api/2022-01/graphql.json";
-            const headers = new Headers({
-            "Content-Type": "application/graphql",
-            "Accept": "application/json",
-            "X-Shopify-Storefront-Access-Token": "ebb7bd8eab1ef3517c4e7af059e3a8ff",
-            });
+//             const headers = new Headers({
+//             "Content-Type": "application/graphql",
+//             "Accept": "application/json",
+//             "X-Shopify-Storefront-Access-Token": "ebb7bd8eab1ef3517c4e7af059e3a8ff",
+//             });
 
             const response2 = await fetch(api_url, {
               method: "POST",
-              headers: headers,
+              headers: {
+            "Content-Type": "application/graphql",
+            "Accept": "application/json",
+            "X-Shopify-Storefront-Access-Token": "ebb7bd8eab1ef3517c4e7af059e3a8ff",
+            },
               body: getQuery(content?.buckle_labels.ids[0]),
             });
 		console.log(response2);
