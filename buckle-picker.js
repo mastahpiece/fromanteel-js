@@ -129,19 +129,15 @@ async function getShopifyProducts() {
     if (content?.buckle_labels.ids[0]){
         try {
             const api_url = "https://fromanteel-watches.myshopify.com/api/2022-01/graphql.json";
-//             const headers = new Headers({
-//             "Content-Type": "application/graphql",
-//             "Accept": "application/json",
-//             "X-Shopify-Storefront-Access-Token": "ebb7bd8eab1ef3517c4e7af059e3a8ff",
-//             });
-
-            const response2 = await fetch(api_url, {
-              method: "POST",
-              headers: {
+            const headers = new Headers({
             "Content-Type": "application/graphql",
             "Accept": "application/json",
             "X-Shopify-Storefront-Access-Token": "ebb7bd8eab1ef3517c4e7af059e3a8ff",
-            },
+            });
+
+            const response2 = await fetch(api_url, {
+              method: "POST",
+              headers: headers,
               body: getQuery(content?.buckle_labels.ids[0]),
             });
 		console.log(response2);
