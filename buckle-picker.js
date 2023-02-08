@@ -2,6 +2,7 @@ var el = document.getElementById("fold-buckle-app-selector");
 var buckleId;
 var buckleSelected = false;
 var popUpIsOpen = false;
+var buckle_price_label = "";
 
 // fetch(`${window.location.href}.json`)
 //   .then((data) => {
@@ -46,7 +47,7 @@ getShopifyProducts().then((data) => {
           <button class="addBuckleButton" type="button"> 
               <span>Add Buckle</span>
               <span class="Button__SeparatorDot"></span>
-              <span id="price" data-money-convertible>Loading..</span>
+              <span id="price" data-money-convertible>${buckle_price_label.length < 1 ? "Loading.." : buckle_price_label}</span>
           </button>
       </div>
   </div>
@@ -146,9 +147,9 @@ async function getShopifyProducts() {
             console.log(data);
       
 		if (data.data.product){
-		  const priceLabel = `€${data.data.product.variants.edges[0].node.price.amount}`;
+		  const priceLabel = `€${data.data.product.variants.edges[0].node.price.amount.slice(0,-2)}`;
       console.log(priceLabel);
-      $("#price").text(priceLabel);
+      buckle_price_label = priceLabel;
       buckleId = data.data.product.variants.edges[0].node.id.toString()
       .split("gid://shopify/ProductVariant/")[1];
         
