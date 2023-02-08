@@ -268,7 +268,6 @@ var css = `
 .popover__message {
     font-family: "Avenir Next",sans-serif;
     text-align: center;
-    text-transform: uppercase;
     letter-spacing: 0.2em;
     font-size: 15px;
     font-weight: 700;
