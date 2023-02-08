@@ -128,7 +128,7 @@ async function getShopifyProducts() {
 
     if (content?.buckle_labels.ids[0]){
         try {
-            const api_url = "https://fromanteel-watches.myshopify.com/api/2022-01/graphql.json";
+            const api_url = "https://fromanteel-watches.myshopify.com/api/2023-01/graphql.json";
             const headers = new Headers({
             "Content-Type": "application/graphql",
             "Accept": "application/json",
@@ -146,17 +146,11 @@ async function getShopifyProducts() {
             console.log(data);
       
 		if (data.data.product){
-		            const priceLabel = `€${data.data.product.variants.edges[0].node.price.slice(
-              0,
-              -3
-            )}`;
-            $("#price").text(priceLabel);
-            buckleId = Buffer.from(
-              data.data.product.variants.edges[0].node.id,
-              "base64"
-            )
-              .toString()
-              .split("/ProductVariant/")[1];
+		  const priceLabel = `€${data.data.product.variants.edges[0].node.price.slice(0,)}`;
+      $("#price").text(priceLabel);
+      buckleId = data.data.product.variants.edges[0].node.id.toString()
+      .split("gid://shopify/ProductVariant/")[1];
+        
 		}
           } catch (error) {
             console.log(`error: ${error}`);
