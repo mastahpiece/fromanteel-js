@@ -132,7 +132,7 @@ async function getShopifyProducts() {
             const headers = new Headers({
             "Content-Type": "application/graphql",
             "Accept": "application/json",
-            "X-Shopify-Storefront-Access-Token": "ebb7bd8eab1ef3517c4e7af059e3a8ff",
+            "X-Shopify-Storefront-Access-Token": "a9ca468fb8388fae2ab62c3208dbf5db",
             });
 
             const response2 = await fetch(api_url, {
