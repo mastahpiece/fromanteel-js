@@ -4,17 +4,8 @@ var buckleSelected = false;
 var popUpIsOpen = false;
 var buckle_price_label = "";
 
-// fetch(`${window.location.href}.json`)
-//   .then((data) => {
-//     data.json().then((d) => console.log(d));
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });
-
 if (el) {
 getShopifyProducts().then((data) => {
-    console.log(data);
     var styleSheet = document.createElement("style");
     styleSheet.innerText = css;
     document.head.appendChild(styleSheet);
@@ -58,10 +49,6 @@ getShopifyProducts().then((data) => {
 
 
 $(document).ready(function () {
-    $(".ProductMeta__Title").change(function () {
-      console.log();
-    });
-  
     $(".buckle__popCloseButton").click(function () {
       $("[id=buckle-picker]").val(0).trigger("buckle1toggle");
       $(".buckle__mobileWrapper").css("display", "none");
@@ -76,7 +63,6 @@ $(document).ready(function () {
   
     /*AddToCartButton label change after adding a buckle*/
     $("#buckle-picker").change(function () {
-      console.log("change");
       var optionId = $("#buckle-picker option:selected")[0].id;
       if (optionId == "buckleOk") {
         buckleSelected = true;
@@ -141,27 +127,23 @@ async function getShopifyProducts() {
               headers: headers,
               body: getQuery(content?.buckle_labels.ids[0]),
             });
-		console.log(response2);
             const data = await response2.json();
-
-            console.log(data);
       
 		if (data.data.product){
 		  const priceLabel = `€${data.data.product.variants.edges[0].node.price.amount.slice(0,-2)}`;
-      console.log(priceLabel);
       buckle_price_label = priceLabel;
       buckleId = data.data.product.variants.edges[0].node.id.toString()
       .split("gid://shopify/ProductVariant/")[1];
         
 		}
           } catch (error) {
-            console.log(`error: ${error}`);
+            console.error(`error: ${error}`);
           }
     }
 
     return content.buckle_labels;
   } catch (error) {
-    console.log(
+    console.error(
       "Something went wrong retrieving the buckle id's. Contact the admin when you see this."
     );
   }
