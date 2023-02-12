@@ -36,7 +36,7 @@ getShopifyProducts().then((data) => {
           </div>
           
           <button class="addBuckleButton" type="button"> 
-              <span>Add Buckle</span>
+              <span>${data?.buttonText}/span>
               <span class="Button__SeparatorDot"></span>
               <span id="price" data-money-convertible>${buckle_price_label.length < 1 ? "Loading.." : buckle_price_label}</span>
           </button>
@@ -108,7 +108,7 @@ function returnBuckleObjectForCart() {
 
 async function getShopifyProducts() {
   const url =
-    "https://europe-west1-fromanteel-nightdive.cloudfunctions.net/getTextLabels";
+    "https://europe-west1-fromanteel-nightdive.cloudfunctions.net/getInfo?collection=Wrz5MqzjaGRRLk1Vjb4X";
   try {
     const response = await fetch(url);
     const content = await response.json();

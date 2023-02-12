@@ -243,9 +243,10 @@ async function getEngravingProductData(id){
         body: query
     });
 
-    console.log(data);
+    const jsonData = await data.json();
+
+    console.log(jsonData);
     
-    const jsonData = data.json();
     engravingPrice = `€${jsonData.data.product.variants.edges[0].node.price.amount.slice(0,-2)}`;
     // $("#engravingPrice").text(`€${jsonData.data.product.variants.edges[0].node.price.amount.slice(0,-2)}`);
     let varId = jsonData.data.product.variants.edges[0].node.id.toString().split("gid://shopify/ProductVariant/")[1];
