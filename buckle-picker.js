@@ -114,7 +114,7 @@ async function getShopifyProducts() {
     const response = await fetch(url);
     const content = await response.json();
 
-    if (content?.data.idv2){
+    if (content?.data.idv2?.length > 1){
         try {
             const api_url = "https://fromanteel-watches.myshopify.com/api/2023-01/graphql.json";
             const headers = new Headers({
@@ -142,7 +142,7 @@ async function getShopifyProducts() {
           }
     }
 
-    return content.buckle_labels;
+    return content.data;
   } catch (error) {
     console.error(
       "Something went wrong retrieving the buckle id's. Contact the admin when you see this."
