@@ -18,7 +18,7 @@ getShopifyProducts().then((data) => {
               <option id="buckleOk" value="1" data-money-convertible>${data?.options.filter(i => i.yes)[0].yes}</option>
               
           </select>
-          <svg class="Icon Icon--select-arrow" role="presentation" viewBox="0 0 19 12">
+          <svg style="height: 15px; width: 15px;" class="Icon Icon--select-arrow" role="presentation" viewBox="0 0 19 12">
               <polyline fill="none" stroke="currentColor" points="17 2 9.5 10 2 2" fill-rule="evenodd" stroke-width="2" stroke-linecap="square"></polyline>
           </svg>
   
