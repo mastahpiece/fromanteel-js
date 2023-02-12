@@ -243,6 +243,8 @@ async function getEngravingProductData(id){
         body: query
     });
 
+    console.log(data);
+    
     const jsonData = data.json();
     engravingPrice = `€${jsonData.data.product.variants.edges[0].node.price.amount.slice(0,-2)}`;
     // $("#engravingPrice").text(`€${jsonData.data.product.variants.edges[0].node.price.amount.slice(0,-2)}`);
