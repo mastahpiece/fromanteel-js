@@ -114,9 +114,7 @@ async function getShopifyProducts() {
     const response = await fetch(url);
     const content = await response.json();
 
-    console.log(content);
-
-    if (content?.buckle_labels.ids[0]){
+    if (content?.data.idv2){
         try {
             const api_url = "https://fromanteel-watches.myshopify.com/api/2023-01/graphql.json";
             const headers = new Headers({
@@ -128,11 +126,9 @@ async function getShopifyProducts() {
             const response2 = await fetch(api_url, {
               method: "POST",
               headers: headers,
-              body: getQuery(content?.buckle_labels.ids[0]),
+              body: getQuery(content?.data.idv2),
             });
             const data = await response2.json();
-
-            console.log(data);
       
 		if (data.data.product){
 		  const priceLabel = `€${data.data.product.variants.edges[0].node.price.amount.slice(0,-2)}`;
