@@ -6,6 +6,7 @@ var buckle_price_label = "";
 
 if (el) {
 getShopifyProducts().then((data) => {
+  if (data){
     var styleSheet = document.createElement("style");
     styleSheet.innerText = css;
     document.head.appendChild(styleSheet);
@@ -36,7 +37,7 @@ getShopifyProducts().then((data) => {
           </div>
           
           <button class="addBuckleButton" type="button"> 
-              <span>${data?.buttonText}/span>
+              <span>${data?.buttonText}</span>
               <span class="Button__SeparatorDot"></span>
               <span id="price" data-money-convertible>${buckle_price_label.length < 1 ? "Loading.." : buckle_price_label}</span>
           </button>
@@ -46,7 +47,7 @@ getShopifyProducts().then((data) => {
   </div>
       </div>
   `;
-
+  }
 
 $(document).ready(function () {
     $(".buckle__popCloseButton").click(function () {
@@ -113,6 +114,8 @@ async function getShopifyProducts() {
     const response = await fetch(url);
     const content = await response.json();
 
+    console.log(content);
+
     if (content?.buckle_labels.ids[0]){
         try {
             const api_url = "https://fromanteel-watches.myshopify.com/api/2023-01/graphql.json";
@@ -128,6 +131,8 @@ async function getShopifyProducts() {
               body: getQuery(content?.buckle_labels.ids[0]),
             });
             const data = await response2.json();
+
+            console.log(data);
       
 		if (data.data.product){
 		  const priceLabel = `€${data.data.product.variants.edges[0].node.price.amount.slice(0,-2)}`;
