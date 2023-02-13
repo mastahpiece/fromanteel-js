@@ -95,7 +95,7 @@ $(document).ready(function () {
           buckleSelected = false;
           popUpIsOpen = false;
         }
-        
+
         $(".buckle__mobileWrapper").css("display", "none");
       }
     });
@@ -404,7 +404,7 @@ var css = `
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 474px;
+    height: 502px;
     background-color: white;
   }
 
