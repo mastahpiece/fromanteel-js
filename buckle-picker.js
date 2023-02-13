@@ -113,6 +113,20 @@ function returnBuckleObjectForCart() {
   return objectToAdd;
 }
 
+async function performAPICall(objectsForAPIcall){
+  const response = await fetch("/cart/add.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+          items: objectsForAPIcall
+      })
+    });
+
+    const data = await response.json();
+}
+
 async function getShopifyProducts() {
   const url =
     "https://europe-west1-fromanteel-nightdive.cloudfunctions.net/getInfo?collection=Wrz5MqzjaGRRLk1Vjb4X";
