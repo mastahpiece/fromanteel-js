@@ -138,11 +138,11 @@ async function getProductData(db_data){
             variants(first: 1){
             edges {
                 node {
-                id,
-                title,
-                price {
-                    amount
-                }
+                    id,
+                    title,
+                    price {
+                        amount
+                    }
                 }
             }
             }
@@ -192,7 +192,7 @@ function getListItemsHTML(productList){
       for (let x of productList){
         listItems.push(
             `<li> <img class="carousel-img Image--lazyLoad" src="${x.images.edges[0].node.url}"/>
-            <p data-price="${x.variants.edges[0].node.priceV2.amount.slice(0,-2)}" id="${x.variants.edges[0].node.id.split("gid://shopify/ProductVariant/")[1]}" class="carousel-title" uk-slideshow-item="${pos}">${x.variants.edges[0].node.title}</p></li>`
+            <p data-price="${x.variants.edges[0].node.price.amount.slice(0,-2)}" id="${x.variants.edges[0].node.id.split("gid://shopify/ProductVariant/")[1]}" class="carousel-title" uk-slideshow-item="${pos}">${x.variants.edges[0].node.title}</p></li>`
         );
         navItems.push(`<li uk-slideshow-item="${pos}"><a class="uk-nav-link-custom" href="#"></a></li>`);
         pos++;
