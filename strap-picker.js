@@ -353,10 +353,10 @@ stroke-width: 4px !important;
   background: white;
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 26%);
   z-index: 10;
-  position: absolute;
-  right: 410px;
+  position: fixed;
+  right: 460px;
   bottom: 0;
-  top: 0;
+  top: 60px;
   display: none;
 
   /* temporary */
