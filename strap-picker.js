@@ -114,63 +114,67 @@ async function performAPICall(objectsForAPIcall){
 async function getProductData(){
     let db_data = await getDataFromStorage();
 
-    strapPickerDiv.innerHTML = getSelectBoxForPage(
-        db_data.dropdownHeader, 
-        db_data.options.filter(e => e.yes)[0]?.yes,
-        db_data.options.filter(e => e.no)[0]?.no);
+    console.log(db_data);
 
-    addModalToPage(db_data);
-
-    let tempIds = db_data.ids;
-
-    const url = "https://fromanteel-watches.myshopify.com/api/2023-01/graphql.json";
-    const headers = {
-        "Content-Type" : "application/graphql",
-        "X-Shopify-Storefront-Access-Token" : "a9ca468fb8388fae2ab62c3208dbf5db"
-    };
-
-    let query = ` {
-      nodes(ids: ${JSON.stringify(tempIds)}) {
-        ... on Product {
-          id
-          title,
-          variants(first: 1){
-            edges {
-              node {
-                id,
-                title,
-                price {
-                  amount
+    if (db_data){
+        strapPickerDiv.innerHTML = getSelectBoxForPage(
+            db_data.dropdownHeader, 
+            db_data.options.filter(e => e.yes)[0]?.yes,
+            db_data.options.filter(e => e.no)[0]?.no);
+    
+        addModalToPage(db_data);
+    
+        let tempIds = db_data.ids;
+    
+        const url = "https://fromanteel-watches.myshopify.com/api/2023-01/graphql.json";
+        const headers = {
+            "Content-Type" : "application/graphql",
+            "X-Shopify-Storefront-Access-Token" : "a9ca468fb8388fae2ab62c3208dbf5db"
+        };
+    
+        let query = ` {
+          nodes(ids: ${JSON.stringify(tempIds)}) {
+            ... on Product {
+              id
+              title,
+              variants(first: 1){
+                edges {
+                  node {
+                    id,
+                    title,
+                    price {
+                      amount
+                    }
+                  }
+                }
+              }
+              images(first: 1){
+                edges {
+                  node {
+                    url
+                  }
                 }
               }
             }
           }
-          images(first: 1){
-            edges {
-              node {
-                url
-              }
+        }`;
+    
+          await fetch(url, {
+              method: "POST", 
+              headers: headers,
+              body: query
+            })
+          .then(async (res) => {
+            let data = await res.json();
+    
+            if (data){
+                getListItemsHTML(data.data.nodes);
             }
-          }
-        }
-      }
-    }`;
-
-      await fetch(url, {
-          method: "POST", 
-          headers: headers,
-          body: query
-        })
-      .then(async (res) => {
-        let data = await res.json();
-
-        if (data){
-            getListItemsHTML(data.data.nodes);
-        }
-
-        displayedPrice = data.data.nodes[0].variants.edges[0].node.price.amount.slice(0,-2);
-        $("#strappicker-button-price-span").text("€" +  data.data.nodes[0].variants.edges[0].node.price.amount.slice(0,-2));
-      }).catch(error => console.error(error));
+    
+            displayedPrice = data.data.nodes[0].variants.edges[0].node.price.amount.slice(0,-2);
+            $("#strappicker-button-price-span").text("€" +  data.data.nodes[0].variants.edges[0].node.price.amount.slice(0,-2));
+          }).catch(error => console.error(error));
+    }
 }
 
 async function getDataFromStorage(){
