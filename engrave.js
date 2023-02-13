@@ -157,7 +157,6 @@ async function getLabelsFromDb(){
 
     return null;
 }
-
 //  Switch background of the to-be-engraved watch back div.
 function setBackgroundOfEngraverImage(type){
     switch(type){
