@@ -61,7 +61,7 @@ var engravingHTML = "";
                             <button class="engraveBtn" type="button">
                                 <span>${engraveData?.buttonText}</span>
                                 <span class="Button__SeparatorDot"></span>
-                                <span id="engraving-button-price-span" data-money-convertible="">${engravingPrice}</span>
+                                <span id="engraving-button-price-span" data-money-convertible="">€${engravingPrice}</span>
                             </button>
                         </div>
                     </div>
@@ -247,7 +247,7 @@ async function getEngravingProductData(id){
     });
 
     const jsonData = await data.json();
-    engravingPrice = `€${jsonData.data.product.variants.edges[0].node.price.amount.slice(0,-2)}`;
+    engravingPrice = `${jsonData.data.product.variants.edges[0].node.price.amount.slice(0,-2)}`;
     // $("#engravingPrice").text(`€${jsonData.data.product.variants.edges[0].node.price.amount.slice(0,-2)}`);
     let varId = jsonData.data.product.variants.edges[0].node.id.toString().split("gid://shopify/ProductVariant/")[1];
     return varId;
