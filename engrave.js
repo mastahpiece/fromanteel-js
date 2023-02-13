@@ -30,8 +30,8 @@ var engravingHTML = "";
                 engravingHTML = `<span>${engraveData?.dropdownHeader}</span>
                 <div class="Select Select--primary">
                     <select id="engraver-dropdown">
-                        <option value="0" selected="selected">${engraveData?.options.filter(i => i.no)[0].no}</option>
-                        <option id="engravingPrice" value="1" data-money-convertible>${engraveData?.options.filter(i => i.yes)[0].yes}</option>       
+                        <option value="0" selected="selected">${engraveData?.options.filter(i => i.no)[0].no?.replace("{price}",engravingPrice)}</option>
+                        <option id="engravingPrice" value="1" data-money-convertible>${engraveData?.options.filter(i => i.yes)[0].yes?.replace("{price}",engravingPrice)}</option>       
                     </select>
                     <svg class="Icon Icon--select-arrow" role="presentation" viewBox="0 0 19 12">
                     <polyline fill="none" stroke="currentColor" points="17 2 9.5 10 2 2" fill-rule="evenodd" stroke-width="2" stroke-linecap="square"></polyline>
