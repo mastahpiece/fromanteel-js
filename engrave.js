@@ -286,7 +286,6 @@ var engravingCSS = `
 .pop-up-header {
     font-family: "Avenir Next",sans-serif;
     text-align: center;
-    text-transform: uppercase;
     max-height: 45px;
     letter-spacing: 0.2em;
     font-size: 15px;
@@ -346,7 +345,6 @@ var engravingCSS = `
     letter-spacing: 0.2em;
     font-family: "Avenir Next",sans-serif;
     font-weight: 700;
-    text-transform: uppercase;
     border: 1px solid black;
 }
 
