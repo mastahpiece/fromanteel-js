@@ -26,7 +26,7 @@ getShopifyProducts().then((data) => {
 
   let newEl = `
   <div class="buckle__mobileWrapper">
-      <header class="popTitle --toggleHeight"></header>
+      <header class="popTitle"></header>
       <div class="buckle__popover__content">
         <button type="button" class="buckle__popCloseButton">
           <svg style="height: 15px; width: 15px;" version="1.1" viewBox="0 0 512 512"xml:space="preserve"><path d="M443.6,387.1L312.4,255.4l131.5-130c5.4-5.4,5.4-14.2,0-19.6l-37.4-37.6c-2.6-2.6-6.1-4-9.8-4c-3.7,0-7.2,1.5-9.8,4  L256,197.8L124.9,68.3c-2.6-2.6-6.1-4-9.8-4c-3.7,0-7.2,1.5-9.8,4L68,105.9c-5.4,5.4-5.4,14.2,0,19.6l131.5,130L68.4,387.1  c-2.6,2.6-4.1,6.1-4.1,9.8c0,3.7,1.4,7.2,4.1,9.8l37.4,37.6c2.7,2.7,6.2,4.1,9.8,4.1c3.5,0,7.1-1.3,9.8-4.1L256,313.1l130.7,131.1  c2.7,2.7,6.2,4.1,9.8,4.1c3.5,0,7.1-1.3,9.8-4.1l37.4-37.6c2.6-2.6,4.1-6.1,4.1-9.8C447.7,393.2,446.2,389.7,443.6,387.1z"/></svg>
@@ -95,6 +95,7 @@ $(document).ready(function () {
           buckleSelected = false;
           popUpIsOpen = false;
         }
+        
         $(".buckle__mobileWrapper").css("display", "none");
       }
     });
@@ -234,14 +235,13 @@ var css = `
 }
 
 .popTitle {
-    position: relative;
-    padding: 15px 20px 13px;
-    border-bottom: 1px solid rgba(207,207,207,0.4);
-    text-align: center;
-}
-  
-.--toggleHeight {
-    height: 45px;
+  position: relative;
+  border-bottom: 1px solid rgba(207,207,207,0.4);
+  text-align: center;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .addBuckleButton {
@@ -341,17 +341,9 @@ var css = `
         transition-property: transform;
         filter: drop-shadow(2px 0 2px rgba(54,54,54,0.2));
     } 
-  
-  .--toggleHeight {
-    height: 45px !important;
-	}
 }
 
 @media (min-width: 1008px){
-    .--toggleHeight {
-        display: none;
-    }
-
     .buckle__popCloseButton {
         display: none;
     }
@@ -386,13 +378,6 @@ var css = `
 }
 
 @media (max-width: 370px){
-  .popTitle {
-    position: relative;
-    padding: 15px 0px 13px;
-    border-bottom: 1px solid rgba(207,207,207,0.4);
-    text-align: center;
-  }
-
   .--toggleHeight {
     height: 45px !important;
   }
@@ -404,7 +389,6 @@ var css = `
   .buckle__popover__content {
     position: absolute;
     display: block;
-    opacity: 0;
     width: 310px;
     bottom: 0;
     left: 0;
@@ -415,7 +399,6 @@ var css = `
   }
 
   .buckle__mobileWrapper {
-    opacity: 0;
     z-index: -1;
     position: fixed;
     left: 0;
