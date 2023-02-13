@@ -111,7 +111,6 @@ var engravingHTML = "";
     });
 
     $(".engraveBtn").click(function(e){
-        $("#engraver-dropdown").val(1);
         engravingPopUpOpen = false;
         engravingSelected = true;
         $(".mobile-view-wrapper").css("display","none");
@@ -351,7 +350,7 @@ var engravingCSS = `
 
 .engraveBtn:hover {
     cursor: pointer;
-    background-color: white;
+    background-color: #ffffff;
     color: black;
 }
 
