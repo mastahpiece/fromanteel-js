@@ -14,8 +14,8 @@ getShopifyProducts().then((data) => {
     <span>${data?.dropdownHeader}</span>
       <div class="Select Select--primary pickerdiv">
           <select id="buckle-picker">
-              <option value="0" selected="selected">${data?.options.filter(i => i.no)[0].no}</option>
-              <option id="buckleOk" value="1" data-money-convertible>${data?.options.filter(i => i.yes)[0].yes}</option>
+              <option value="0" selected="selected">${data?.options.filter(i => i.no)[0].no?.replaceAll("{price}",buckle_price_label)}</option>
+              <option id="buckleOk" value="1" data-money-convertible>${data?.options.filter(i => i.yes)[0].yes?.replaceAll("{price}",buckle_price_label)}</option>
               
           </select>
           <svg class="Icon Icon--select-arrow" role="presentation" viewBox="0 0 19 12">
@@ -44,7 +44,7 @@ getShopifyProducts().then((data) => {
               <button class="addBuckleButton" type="button"> 
                   <span>${data?.buttonText}</span>
                   <span class="Button__SeparatorDot"></span>
-                  <span id="price" data-money-convertible>${buckle_price_label.length < 1 ? "Loading.." : buckle_price_label}</span>
+                  <span id="price" data-money-convertible>€${buckle_price_label}</span>
               </button>
           </div>
       </div>
@@ -151,7 +151,7 @@ async function getShopifyProducts() {
             const data = await response2.json();
       
 		if (data.data.product){
-		  const priceLabel = `€${data.data.product.variants.edges[0].node.price.amount.slice(0,-2)}`;
+		  const priceLabel = `${data.data.product.variants.edges[0].node.price.amount.slice(0,-2)}`;
       buckle_price_label = priceLabel;
       buckleId = data.data.product.variants.edges[0].node.id.toString()
       .split("gid://shopify/ProductVariant/")[1];
