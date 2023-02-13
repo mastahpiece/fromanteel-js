@@ -184,7 +184,7 @@ async function getDataFromStorage(){
   let jsonData = await res.json();
 
   if (jsonData?.data && jsonData?.data?.ids?.length >= 1){
-    return jsonData;
+    return jsonData.data;
   } else {return null};
 }
 
