@@ -31,26 +31,29 @@ var observer = null;
 
     if (strapPickerDiv){
 
-        await getProductData();
+        const storageData = await getDataFromStorage();
 
-        let strapPickerStylesheet = document.createElement("style");
-        strapPickerStylesheet.innerHTML = strapPickerCSS;
+        if (storageData){
+            let strapPickerStylesheet = document.createElement("style");
+            strapPickerStylesheet.innerHTML = strapPickerCSS;
+    
+            let uikitCSS = document.createElement("link");
+            uikitCSS.rel = "stylesheet";
+            uikitCSS.href = "https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/css/uikit.min.css";
+    
+            let uikit1 = document.createElement("script");
+            uikit1.src = "https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit.min.js";
+    
+            let uikit2 = document.createElement("script");
+            uikit2.src = "https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit-icons.min.js";
+    
+            strapPickerDiv.append(strapPickerStylesheet);
+            headEl.append(uikitCSS);
+            headEl.append(uikit1);
+            headEl.append(uikit2);
 
-        let uikitCSS = document.createElement("link");
-        uikitCSS.rel = "stylesheet";
-        uikitCSS.href = "https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/css/uikit.min.css";
-
-        let uikit1 = document.createElement("script");
-        uikit1.src = "https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit.min.js";
-
-        let uikit2 = document.createElement("script");
-        uikit2.src = "https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit-icons.min.js";
-
-        strapPickerDiv.append(strapPickerStylesheet);
-        headEl.append(uikitCSS);
-        headEl.append(uikit1);
-        headEl.append(uikit2);
-
+            getProductData(storageData);
+        }
     }
 
     $("#strap-picker-dropdown").change( function (event){
@@ -111,70 +114,64 @@ async function performAPICall(objectsForAPIcall){
       const data = await response.json();
 }
 
-async function getProductData(){
-    let db_data = await getDataFromStorage();
+async function getProductData(db_data){
+    strapPickerDiv.innerHTML = getSelectBoxForPage(
+        db_data.dropdownHeader, 
+        db_data.options.filter(e => e.yes)[0]?.yes,
+        db_data.options.filter(e => e.no)[0]?.no);
 
-    console.log(db_data);
+    addModalToPage(db_data);
 
-    if (db_data){
-        strapPickerDiv.innerHTML = getSelectBoxForPage(
-            db_data.dropdownHeader, 
-            db_data.options.filter(e => e.yes)[0]?.yes,
-            db_data.options.filter(e => e.no)[0]?.no);
-    
-        addModalToPage(db_data);
-    
-        let tempIds = db_data.ids;
-    
-        const url = "https://fromanteel-watches.myshopify.com/api/2023-01/graphql.json";
-        const headers = {
-            "Content-Type" : "application/graphql",
-            "X-Shopify-Storefront-Access-Token" : "a9ca468fb8388fae2ab62c3208dbf5db"
-        };
-    
-        let query = ` {
-          nodes(ids: ${JSON.stringify(tempIds)}) {
-            ... on Product {
-              id
-              title,
-              variants(first: 1){
-                edges {
-                  node {
-                    id,
-                    title,
-                    price {
-                      amount
-                    }
-                  }
+    let tempIds = db_data.ids;
+
+    const url = "https://fromanteel-watches.myshopify.com/api/2023-01/graphql.json";
+    const headers = {
+        "Content-Type" : "application/graphql",
+        "X-Shopify-Storefront-Access-Token" : "a9ca468fb8388fae2ab62c3208dbf5db"
+    };
+
+    let query = ` {
+        nodes(ids: ${JSON.stringify(tempIds)}) {
+        ... on Product {
+            id
+            title,
+            variants(first: 1){
+            edges {
+                node {
+                id,
+                title,
+                price {
+                    amount
                 }
-              }
-              images(first: 1){
-                edges {
-                  node {
-                    url
-                  }
                 }
-              }
             }
-          }
-        }`;
-    
-          await fetch(url, {
-              method: "POST", 
-              headers: headers,
-              body: query
-            })
-          .then(async (res) => {
-            let data = await res.json();
-    
-            if (data){
-                getListItemsHTML(data.data.nodes);
             }
-    
-            displayedPrice = data.data.nodes[0].variants.edges[0].node.price.amount.slice(0,-2);
-            $("#strappicker-button-price-span").text("€" +  data.data.nodes[0].variants.edges[0].node.price.amount.slice(0,-2));
-          }).catch(error => console.error(error));
-    }
+            images(first: 1){
+            edges {
+                node {
+                url
+                }
+            }
+            }
+        }
+        }
+    }`;
+
+        await fetch(url, {
+            method: "POST", 
+            headers: headers,
+            body: query
+        })
+        .then(async (res) => {
+        let data = await res.json();
+
+        if (data){
+            getListItemsHTML(data.data.nodes);
+        }
+
+        displayedPrice = data.data.nodes[0].variants.edges[0].node.price.amount.slice(0,-2);
+        $("#strappicker-button-price-span").text("€" +  data.data.nodes[0].variants.edges[0].node.price.amount.slice(0,-2));
+        }).catch(error => console.error(error));
 }
 
 async function getDataFromStorage(){
