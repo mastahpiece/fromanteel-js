@@ -7,6 +7,7 @@ var strapPopUpOpen = false;
 var displayedPrice = 0;
 var selectedStrap = undefined;
 var strap_Data;
+var strapPickerDiv;
 
 const config = { attributes: true, subtree: true};
 
@@ -25,7 +26,7 @@ const callback = function(mutationsList, observer) {
 var observer = null;
 
  $(document).ready(async function(){
-    var strapPickerDiv = document.querySelector("div#strap-app-selector");
+    strapPickerDiv = document.querySelector("div#strap-app-selector");
     const headEl = document.querySelector("head");
 
     if (strapPickerDiv){
