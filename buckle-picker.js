@@ -242,6 +242,7 @@ var css = `
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 
 .addBuckleButton {
@@ -293,20 +294,10 @@ var css = `
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 5;
 }
 
 @media (min-width: 371px) and (max-width: 1008px){
-    .buckle__popCloseButton {
-      width: 30px;
-      height: 30px;
-      position: absolute;
-      top: 7px;
-      left: 17px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
     .buckle__mobileWrapper {
         z-index: 10;
         position: fixed;
@@ -378,10 +369,6 @@ var css = `
 }
 
 @media (max-width: 370px){
-  .--toggleHeight {
-    height: 45px !important;
-  }
-
   .content {
     padding: 0px 25px 15px 25px;
   }
