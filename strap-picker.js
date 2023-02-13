@@ -47,16 +47,17 @@ var observer = null;
             let uikit2 = document.createElement("script");
             uikit2.src = "https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit-icons.min.js";
     
-            strapPickerDiv.append(strapPickerStylesheet);
+            headEl.append(strapPickerStylesheet);
             headEl.append(uikitCSS);
             headEl.append(uikit1);
             headEl.append(uikit2);
 
-            getProductData(storageData);
+            await getProductData(storageData);
         }
     }
 
     $("#strap-picker-dropdown").change( function (event){
+        console.log("change detected");
         if (event.target.value == 1){
             const targetNode = $(".uk-slideshow-items")[0];
             observer = new MutationObserver(callback);
