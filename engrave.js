@@ -36,8 +36,9 @@ var engravingHTML = "";
                     <svg class="Icon Icon--select-arrow" role="presentation" viewBox="0 0 19 12">
                     <polyline fill="none" stroke="currentColor" points="17 2 9.5 10 2 2" fill-rule="evenodd" stroke-width="2" stroke-linecap="square"></polyline>
                     </svg>
-                </div>
-                
+                </div>`;
+
+                let dialog = `                               
                 <div class="mobile-view-wrapper">
                     <div class="pop-up">
                         <div class="pop-up-header">
@@ -64,7 +65,10 @@ var engravingHTML = "";
                             </button>
                         </div>
                     </div>
-                </div>`;
+                </div>
+                `;
+
+                $('body').prepend(dialog);
     
                 engravingDiv.innerHTML = engravingHTML;
                 let engravingStylesheet = document.createElement("style");
@@ -262,13 +266,12 @@ var engravingCSS = `
     background: white;
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 26%);
     z-index: 10;
-    position: absolute;
-    right: 410px;
+    position: fixed;
+    right: 460px;
     bottom: 25px;
     display: none;
     bottom: 0;
-    top: 0;
-
+    top: 60px;
     /* temporary */
     margin: 30px;
 }
