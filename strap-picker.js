@@ -62,7 +62,6 @@ var observer = null;
             const targetNode = $(".uk-slideshow-items")[0];
             observer = new MutationObserver(callback);
             observer.observe(targetNode, config);
-
             $(".mobile-view-wrapper-strap").css("display","block");
             strapPopUpOpen = true;
         } else {
