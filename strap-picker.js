@@ -189,6 +189,7 @@ function getListItemsHTML(productList){
     let navItems = [];
     let pos = 0;
       for (let x of productList){
+        console.log(x);
         listItems.push(
             `<li> <img class="carousel-img Image--lazyLoad" src="${x.images.edges[0].node.url}"/>
             <p data-price="${x.variants.edges[0].node.price.amount.slice(0,-2)}" id="${x.variants.edges[0].node.id.split("gid://shopify/ProductVariant/")[1]}" class="carousel-title" uk-slideshow-item="${pos}">${x.variants.edges[0].node.title}</p></li>`
