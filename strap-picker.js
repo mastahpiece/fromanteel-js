@@ -64,7 +64,6 @@ var observer = null;
             observer.observe(targetNode, config);
 
             $(".mobile-view-wrapper-strap").css("display","block");
-            getProductData();
             strapPopUpOpen = true;
         } else {
             strapPopUpOpen = false;
