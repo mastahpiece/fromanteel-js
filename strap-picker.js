@@ -39,7 +39,7 @@ var observer = null;
     
             let uikitCSS = document.createElement("link");
             uikitCSS.rel = "stylesheet";
-            uikitCSS.href = "https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/css/uikit.min.css";
+            uikitCSS.href = "https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/css/uikit-core.min.css";
     
             let uikit1 = document.createElement("script");
             uikit1.src = "https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit.min.js";
