@@ -160,6 +160,8 @@ async function getShopifyProducts() {
           } catch (error) {
             console.error(`error: ${error}`);
           }
+    } else {
+      return null;
     }
 
     return content.data;

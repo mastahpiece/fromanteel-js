@@ -57,7 +57,6 @@ var observer = null;
     }
 
     $("#strap-picker-dropdown").change( function (event){
-        console.log("change detected");
         if (event.target.value == 1){
             const targetNode = $(".uk-slideshow-items")[0];
             observer = new MutationObserver(callback);
@@ -116,8 +115,8 @@ async function performAPICall(objectsForAPIcall){
 async function getProductData(db_data){
     strapPickerDiv.innerHTML = getSelectBoxForPage(
         db_data.dropdownHeader, 
-        db_data.options.filter(e => e.yes)[0]?.yes,
-        db_data.options.filter(e => e.no)[0]?.no);
+        db_data?.options?.filter(e => e.yes)[0]?.yes,
+        db_data?.options?.filter(e => e.no)[0]?.no);
 
     addModalToPage(db_data);
 
@@ -179,7 +178,7 @@ async function getDataFromStorage(){
   let res = await fetch(url); 
   let jsonData = await res.json();
 
-  if (jsonData?.data && jsonData?.data?.ids?.length >= 1){
+  if (jsonData?.data && jsonData?.data?.idsv2?.length >= 1){
     return jsonData.data;
   } else {return null};
 }
@@ -189,7 +188,6 @@ function getListItemsHTML(productList){
     let navItems = [];
     let pos = 0;
       for (let x of productList){
-        console.log(x);
         listItems.push(
             `<li> <img class="carousel-img Image--lazyLoad" src="${x.images.edges[0].node.url}"/>
             <p data-price="${x.variants.edges[0].node.price.amount.slice(0,-2)}" id="${x.variants.edges[0].node.id.split("gid://shopify/ProductVariant/")[1]}" class="carousel-title" uk-slideshow-item="${pos}">${x.variants.edges[0].node.title}</p></li>`
