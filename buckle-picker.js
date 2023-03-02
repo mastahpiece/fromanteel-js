@@ -1,3 +1,5 @@
+console.log("Buckle-picker script loaded in");
+
 var el = document.getElementById("fold-buckle-app-selector");
 var buckleId;
 var buckleSelected = false;
