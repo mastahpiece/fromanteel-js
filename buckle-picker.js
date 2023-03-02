@@ -40,7 +40,7 @@ getShopifyProducts().then((data) => {
               </p>
 
               <div class="fold_buckle_div">
-                  <img class="Image--lazyLoad" src="https://firebasestorage.googleapis.com/v0/b/my-masjid-bae25.appspot.com/o/fold_buckle.jpg?alt=media&token=064c4233-d801-4ec4-b9ad-840494211f96"/>
+                  <img style="max-width: 100%" class="Image--lazyLoad" src="https://firebasestorage.googleapis.com/v0/b/my-masjid-bae25.appspot.com/o/fold_buckle.jpg?alt=media&token=064c4233-d801-4ec4-b9ad-840494211f96"/>
               </div>
               
               <button class="addBuckleButton" type="button"> 
