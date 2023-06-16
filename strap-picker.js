@@ -120,7 +120,7 @@ async function getProductData(db_data){
 
     addModalToPage(db_data);
 
-    let tempIds = db_data.ids;
+    let tempIds = db_data.idsv2;
 
     const url = "https://fromanteel-watches.myshopify.com/api/2023-01/graphql.json";
     const headers = {
